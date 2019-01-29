@@ -14,6 +14,7 @@ type PollerOptions struct {
 	MetricInterval time.Duration
 	MetricName     string
 	Namespace      string
+	GroupKind      string
 }
 
 type ResourceScalerConfig struct {
