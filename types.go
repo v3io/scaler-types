@@ -1,20 +1,21 @@
 package scaler_types
 
-import "time"
+import (
+	"encoding/json"
+	"time"
+)
 
 type AutoScalerOptions struct {
 	Namespace     string
 	ScaleInterval time.Duration
-	ScaleWindow   time.Duration
-	MetricName    string
-	Threshold     int64
 }
 
 type PollerOptions struct {
-	MetricInterval time.Duration
-	MetricName     string
-	Namespace      string
-	GroupKind      string
+	MetricInterval      time.Duration
+	ReconfigureInterval time.Duration
+	MetricNames         []string
+	Namespace           string
+	GroupKind           string
 }
 
 type ResourceScalerConfig struct {
@@ -38,4 +39,29 @@ type ResourceScaler interface {
 	GetConfig() (*ResourceScalerConfig, error)
 }
 
-type Resource string
+type Resource struct {
+	Name           string          `json:"name,omitempty"`
+	ScaleResources []ScaleResource `json:"scale_resources,omitempty"`
+}
+
+func (r Resource) String() string {
+	out, err := json.Marshal(r)
+	if err != nil {
+		panic(err)
+	}
+	return string(out)
+}
+
+type ScaleResource struct {
+	MetricName string        `json:"metric_name,omitempty"`
+	WindowSize time.Duration `json:"windows_size,omitempty"`
+	Threshold  int           `json:"threshold,omitempty"`
+}
+
+func (sr ScaleResource) String() string {
+	out, err := json.Marshal(sr)
+	if err != nil {
+		panic(err)
+	}
+	return string(out)
+}
