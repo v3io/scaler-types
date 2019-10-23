@@ -55,7 +55,7 @@ func (r Resource) String() string {
 type ScaleResource struct {
 	MetricName string        `json:"metric_name,omitempty"`
 	WindowSize time.Duration `json:"windows_size,omitempty"`
-	Threshold  int           `json:"threshold,omitempty"`
+	Threshold  int           `json:"threshold"`
 }
 
 func (sr ScaleResource) String() string {
