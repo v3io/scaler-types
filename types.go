@@ -8,20 +8,12 @@ import (
 type AutoScalerOptions struct {
 	Namespace     string
 	ScaleInterval time.Duration
-}
-
-type PollerOptions struct {
-	MetricInterval      time.Duration
-	ReconfigureInterval time.Duration
-	MetricNames         []string
-	Namespace           string
-	GroupKind           string
+	GroupKind     string
 }
 
 type ResourceScalerConfig struct {
 	KubeconfigPath    string
 	AutoScalerOptions AutoScalerOptions
-	PollerOptions     PollerOptions
 	DLXOptions        DLXOptions
 }
 
@@ -40,8 +32,10 @@ type ResourceScaler interface {
 }
 
 type Resource struct {
-	Name           string          `json:"name,omitempty"`
-	ScaleResources []ScaleResource `json:"scale_resources,omitempty"`
+	Name               string          `json:"name,omitempty"`
+	ScaleResources     []ScaleResource `json:"scale_resources,omitempty"`
+	LastScaleState     ScaleState      `json:"last_scale_state,omitempty"`
+	LastScaleStateTime time.Time       `json:"last_scale_state_time,omitempty"`
 }
 
 func (r Resource) String() string {
@@ -55,7 +49,7 @@ func (r Resource) String() string {
 type ScaleResource struct {
 	MetricName string        `json:"metric_name,omitempty"`
 	WindowSize time.Duration `json:"windows_size,omitempty"`
-	Threshold  int           `json:"threshold"`
+	Threshold  int           `json:"threshold,omitempty"`
 }
 
 func (sr ScaleResource) String() string {
@@ -65,3 +59,11 @@ func (sr ScaleResource) String() string {
 	}
 	return string(out)
 }
+
+type ScaleState string
+
+const (
+	StartingScaleState ScaleState = "starting"
+	FromZeroScaleState ScaleState = "fromZero"
+	ToZeroScaleState   ScaleState = "toZero"
+)
