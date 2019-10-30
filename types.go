@@ -63,7 +63,7 @@ func (sr ScaleResource) String() string {
 type ScaleState string
 
 const (
-	StartingScaleState ScaleState = "starting"
+	NonScaleState      ScaleState = "non"
 	FromZeroScaleState ScaleState = "fromZero"
 	ToZeroScaleState   ScaleState = "toZero"
 )
