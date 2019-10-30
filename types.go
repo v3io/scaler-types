@@ -70,7 +70,7 @@ const (
 	ToZeroScaleState   ScaleState = "toZero"
 )
 
-func parseScaleState(scaleStateStr string) (ScaleState, error) {
+func ParseScaleState(scaleStateStr string) (ScaleState, error) {
 	switch scaleStateStr {
 	case string(NonScaleState):
 		return NonScaleState, nil
