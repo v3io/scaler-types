@@ -2,6 +2,8 @@ package scaler_types
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"time"
 )
 
@@ -67,3 +69,16 @@ const (
 	FromZeroScaleState ScaleState = "fromZero"
 	ToZeroScaleState   ScaleState = "toZero"
 )
+
+func parseScaleState(scaleStateStr string) (ScaleState, error) {
+	switch scaleStateStr {
+	case string(NonScaleState):
+		return NonScaleState, nil
+	case string(FromZeroScaleState):
+		return FromZeroScaleState, nil
+	case string(ToZeroScaleState):
+		return ToZeroScaleState, nil
+	default:
+		return "", errors.New(fmt.Sprintf("Unknown scale state: %s", scaleStateStr))
+	}
+}
