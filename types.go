@@ -65,19 +65,25 @@ func (sr ScaleResource) String() string {
 type ScaleState string
 
 const (
-	NonScaleState      ScaleState = "non"
-	FromZeroScaleState ScaleState = "fromZero"
-	ToZeroScaleState   ScaleState = "toZero"
+	NonScaleState             ScaleState = "non"
+	ScalingFromZeroScaleState ScaleState = "scalingFromZero"
+	ScaledFromZeroScaleState  ScaleState = "scaledFromZero"
+	ScalingToZeroScaleState   ScaleState = "scalingToZero"
+	ScaledToZeroScaleState    ScaleState = "scaledToZero"
 )
 
 func ParseScaleState(scaleStateStr string) (ScaleState, error) {
 	switch scaleStateStr {
 	case string(NonScaleState):
 		return NonScaleState, nil
-	case string(FromZeroScaleState):
-		return FromZeroScaleState, nil
-	case string(ToZeroScaleState):
-		return ToZeroScaleState, nil
+	case string(ScalingFromZeroScaleState):
+		return ScalingFromZeroScaleState, nil
+	case string(ScaledFromZeroScaleState):
+		return ScaledFromZeroScaleState, nil
+	case string(ScalingToZeroScaleState):
+		return ScalingToZeroScaleState, nil
+	case string(ScaledToZeroScaleState):
+		return ScaledToZeroScaleState, nil
 	default:
 		return "", errors.New(fmt.Sprintf("Unknown scale state: %s", scaleStateStr))
 	}
