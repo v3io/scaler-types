@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"strings"
 	"time"
 )
 
@@ -52,6 +53,21 @@ type ScaleResource struct {
 	MetricName string        `json:"metric_name,omitempty"`
 	WindowSize time.Duration `json:"windows_size,omitempty"`
 	Threshold  int           `json:"threshold,omitempty"`
+}
+
+func (sr ScaleResource) GetKubernetesMetricName() string {
+	return fmt.Sprintf("%s_per_%s", sr.MetricName, shortDurationString(sr.WindowSize))
+}
+
+func shortDurationString(d time.Duration) string {
+	s := d.String()
+	if strings.HasSuffix(s, "m0s") {
+		s = s[:len(s)-2]
+	}
+	if strings.HasSuffix(s, "h0m") {
+		s = s[:len(s)-2]
+	}
+	return s
 }
 
 func (sr ScaleResource) String() string {
