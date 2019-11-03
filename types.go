@@ -37,8 +37,8 @@ type ResourceScaler interface {
 type Resource struct {
 	Name               string          `json:"name,omitempty"`
 	ScaleResources     []ScaleResource `json:"scale_resources,omitempty"`
-	LastScaleState     ScaleState      `json:"last_scale_state,omitempty"`
-	LastScaleStateTime time.Time       `json:"last_scale_state_time,omitempty"`
+	LastScaleEvent     ScaleEvent      `json:"last_scale_event,omitempty"`
+	LastScaleEventTime time.Time       `json:"last_scale_event_time,omitempty"`
 }
 
 func (r Resource) String() string {
@@ -78,29 +78,29 @@ func (sr ScaleResource) String() string {
 	return string(out)
 }
 
-type ScaleState string
+type ScaleEvent string
 
 const (
-	NonScaleState             ScaleState = "non"
-	ScalingFromZeroScaleState ScaleState = "scalingFromZero"
-	ScaledFromZeroScaleState  ScaleState = "scaledFromZero"
-	ScalingToZeroScaleState   ScaleState = "scalingToZero"
-	ScaledToZeroScaleState    ScaleState = "scaledToZero"
+	NonScaleEvent                    ScaleEvent = "non"
+	ScaleFromZeroStartedScaleEvent   ScaleEvent = "scaleFromZeroStarted"
+	ScaleFromZeroCompletedScaleEvent ScaleEvent = "scaleFromZeroCompleted"
+	ScaleToZeroStartedScaleEvent     ScaleEvent = "scaleToZeroStarted"
+	ScaleToZeroCompletedScaleEvent   ScaleEvent = "scaleToZeroCompleted"
 )
 
-func ParseScaleState(scaleStateStr string) (ScaleState, error) {
-	switch scaleStateStr {
-	case string(NonScaleState):
-		return NonScaleState, nil
-	case string(ScalingFromZeroScaleState):
-		return ScalingFromZeroScaleState, nil
-	case string(ScaledFromZeroScaleState):
-		return ScaledFromZeroScaleState, nil
-	case string(ScalingToZeroScaleState):
-		return ScalingToZeroScaleState, nil
-	case string(ScaledToZeroScaleState):
-		return ScaledToZeroScaleState, nil
+func ParseScaleEvent(scaleEventStr string) (ScaleEvent, error) {
+	switch scaleEventStr {
+	case string(NonScaleEvent):
+		return NonScaleEvent, nil
+	case string(ScaleFromZeroStartedScaleEvent):
+		return ScaleFromZeroStartedScaleEvent, nil
+	case string(ScaleFromZeroCompletedScaleEvent):
+		return ScaleFromZeroCompletedScaleEvent, nil
+	case string(ScaleToZeroStartedScaleEvent):
+		return ScaleToZeroStartedScaleEvent, nil
+	case string(ScaleToZeroCompletedScaleEvent):
+		return ScaleToZeroCompletedScaleEvent, nil
 	default:
-		return "", errors.New(fmt.Sprintf("Unknown scale state: %s", scaleStateStr))
+		return "", errors.New(fmt.Sprintf("Unknown scale event: %s", scaleEventStr))
 	}
 }
