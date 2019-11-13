@@ -37,8 +37,8 @@ type ResourceScaler interface {
 type Resource struct {
 	Name               string          `json:"name,omitempty"`
 	ScaleResources     []ScaleResource `json:"scale_resources,omitempty"`
-	LastScaleEvent     ScaleEvent      `json:"last_scale_event,omitempty"`
-	LastScaleEventTime time.Time       `json:"last_scale_event_time,omitempty"`
+	LastScaleEvent     *ScaleEvent     `json:"last_scale_event,omitempty"`
+	LastScaleEventTime *time.Time      `json:"last_scale_event_time,omitempty"`
 }
 
 func (r Resource) String() string {
@@ -81,7 +81,7 @@ func (sr ScaleResource) String() string {
 type ScaleEvent string
 
 const (
-	NonScaleEvent                    ScaleEvent = "non"
+	ResourceStartedScaleEvent        ScaleEvent = "resourceStarted"
 	ScaleFromZeroStartedScaleEvent   ScaleEvent = "scaleFromZeroStarted"
 	ScaleFromZeroCompletedScaleEvent ScaleEvent = "scaleFromZeroCompleted"
 	ScaleToZeroStartedScaleEvent     ScaleEvent = "scaleToZeroStarted"
@@ -90,8 +90,8 @@ const (
 
 func ParseScaleEvent(scaleEventStr string) (ScaleEvent, error) {
 	switch scaleEventStr {
-	case string(NonScaleEvent):
-		return NonScaleEvent, nil
+	case string(ResourceStartedScaleEvent):
+		return ResourceStartedScaleEvent, nil
 	case string(ScaleFromZeroStartedScaleEvent):
 		return ScaleFromZeroStartedScaleEvent, nil
 	case string(ScaleFromZeroCompletedScaleEvent):
