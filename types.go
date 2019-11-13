@@ -82,7 +82,7 @@ func (sr ScaleResource) String() string {
 type ScaleEvent string
 
 const (
-	ResourceStartedScaleEvent        ScaleEvent = "resourceStarted"
+	ResourceUpdatedScaleEvent        ScaleEvent = "resourceUpdated"
 	ScaleFromZeroStartedScaleEvent   ScaleEvent = "scaleFromZeroStarted"
 	ScaleFromZeroCompletedScaleEvent ScaleEvent = "scaleFromZeroCompleted"
 	ScaleToZeroStartedScaleEvent     ScaleEvent = "scaleToZeroStarted"
@@ -91,8 +91,8 @@ const (
 
 func ParseScaleEvent(scaleEventStr string) (ScaleEvent, error) {
 	switch scaleEventStr {
-	case string(ResourceStartedScaleEvent):
-		return ResourceStartedScaleEvent, nil
+	case string(ResourceUpdatedScaleEvent):
+		return ResourceUpdatedScaleEvent, nil
 	case string(ScaleFromZeroStartedScaleEvent):
 		return ScaleFromZeroStartedScaleEvent, nil
 	case string(ScaleFromZeroCompletedScaleEvent):
