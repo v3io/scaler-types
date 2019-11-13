@@ -21,11 +21,12 @@ type ResourceScalerConfig struct {
 }
 
 type DLXOptions struct {
-	Namespace        string
-	TargetNameHeader string
-	TargetPathHeader string
-	TargetPort       int
-	ListenAddress    string
+	Namespace                string
+	TargetNameHeader         string
+	TargetPathHeader         string
+	TargetPort               int
+	ListenAddress            string
+	ResourceReadinessTimeout time.Duration
 }
 
 type ResourceScaler interface {
