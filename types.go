@@ -30,7 +30,7 @@ type DLXOptions struct {
 }
 
 type ResourceScaler interface {
-	SetScale(Resource, int) error
+	SetScale([]Resource, int) error
 	GetResources() ([]Resource, error)
 	GetConfig() (*ResourceScalerConfig, error)
 }
