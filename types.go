@@ -33,6 +33,7 @@ type ResourceScaler interface {
 	SetScale([]Resource, int) error
 	GetResources() ([]Resource, error)
 	GetConfig() (*ResourceScalerConfig, error)
+	ResolveServiceName(Resource) (string, error)
 }
 
 type Resource struct {
