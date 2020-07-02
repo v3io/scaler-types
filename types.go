@@ -6,12 +6,14 @@ import (
 	"fmt"
 	"strings"
 	"time"
+
+	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
 type AutoScalerOptions struct {
 	Namespace     string
 	ScaleInterval Duration
-	GroupKind     string
+	GroupKind     schema.GroupKind
 }
 
 type ResourceScalerConfig struct {
