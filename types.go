@@ -1,6 +1,7 @@
 package scaler_types
 
 import (
+	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -33,6 +34,7 @@ type DLXOptions struct {
 
 type ResourceScaler interface {
 	SetScale([]Resource, int) error
+	SetScaleCtx(context.Context, []Resource, int) error
 	GetResources() ([]Resource, error)
 	GetConfig() (*ResourceScalerConfig, error)
 	ResolveServiceName(Resource) (string, error)
