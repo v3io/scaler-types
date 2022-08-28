@@ -1,5 +1,5 @@
 module github.com/v3io/scaler-types
 
-go 1.14
+go 1.17
 
-require k8s.io/apimachinery v0.15.12
+require k8s.io/apimachinery v0.23.8
